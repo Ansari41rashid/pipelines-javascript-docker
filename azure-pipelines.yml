@@ -8,15 +8,15 @@ stages:
   - job: Build
     displayName: Build job
     pool:
-      vmImage: $(vmImageName)
+      vmImage: 'ubuntu latest' #$(vmImageName)
     steps:
     - task: Docker@2
       displayName: Build and push an image to container registry
       inputs:
         command: buildAndPush
-        repository: $(imageRepository)
+        repository: 'myaksapp' #$(imageRepository)
         dockerfile: $(dockerfilePath)
-        containerRegistry: $(dockerRegistryServiceConnection)
+        containerRegistry: 'acr' #$(dockerRegistryServiceConnection)
         tags: |
           $(tag)
           
@@ -34,7 +34,7 @@ stages:
     displayName: Deploy job
     pool:
       vmImage: $(vmImageName)
-    environment: 'myenv.aksnamespace' #customize with your environment
+    environment: 'myaksenv' #customize with your environment
     strategy:
       runOnce:
         deploy:
